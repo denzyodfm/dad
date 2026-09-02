@@ -26,9 +26,8 @@
   <meta name="twitter:image" content="/output/og-image.png" />
   <meta name="twitter:image:alt" content="Dennis Dizon — business systems, without the friction. 40% less manual entry, 30% faster processing, 99% uptime, 10+ years in IT." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/fonts/manrope-400-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/fonts/fonts.css" />
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js" defer></script>
   <script type="application/ld+json">
@@ -78,10 +77,10 @@
 
       <section class="projects" aria-labelledby="projects-title">
         <div class="section-label"><p class="eyebrow">Selected systems</p><h2 id="projects-title">Work</h2></div>
-        <article class="project cobalt"><div class="card-top"><span>01</span><span>FileMaker · API</span></div><div><small>Multi-branch operations</small><h3>Centralized<br />Lending</h3></div><button type="button" data-dialog="lending-dialog">Details ↗</button></article>
-        <article class="project ink"><div class="card-top"><span>02</span><span>150+ employees</span></div><div><small>People operations</small><h3>HR Information<br />System</h3></div><button type="button" data-dialog="hris-dialog">Details ↗</button></article>
-        <article class="project outline"><div class="card-top"><span>03</span><span>Next.js · Supabase</span></div><div><small>Modern web product</small><h3>Resort<br />Booking</h3></div><button type="button" data-dialog="booking-dialog">Details ↗</button></article>
-        <article class="project outline-cobalt"><div class="card-top"><span>04</span><span>SMS · Email · API</span></div><div><small>Automated communication</small><h3>Real-Time<br />Alerts</h3></div><button type="button" data-dialog="alerts-dialog">Details ↗</button></article>
+        <article class="project cobalt"><div class="card-top"><span>01</span><span>FileMaker · API</span></div><div><small>Multi-branch operations</small><h3>Centralized<br />Lending</h3></div><button type="button" data-dialog="lending-dialog" aria-label="Details: Centralized Lending">Details ↗</button></article>
+        <article class="project ink"><div class="card-top"><span>02</span><span>150+ employees</span></div><div><small>People operations</small><h3>HR Information<br />System</h3></div><button type="button" data-dialog="hris-dialog" aria-label="Details: HR Information System">Details ↗</button></article>
+        <article class="project outline"><div class="card-top"><span>03</span><span>Next.js · Supabase</span></div><div><small>Modern web product</small><h3>Resort<br />Booking</h3></div><button type="button" data-dialog="booking-dialog" aria-label="Details: Resort Booking">Details ↗</button></article>
+        <article class="project outline-cobalt"><div class="card-top"><span>04</span><span>SMS · Email · API</span></div><div><small>Automated communication</small><h3>Real-Time<br />Alerts</h3></div><button type="button" data-dialog="alerts-dialog" aria-label="Details: Real-Time Alerts">Details ↗</button></article>
       </section>
 
       <section class="bottom" aria-label="Career overview">

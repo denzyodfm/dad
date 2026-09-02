@@ -39,6 +39,27 @@ for visual review.
 `Dennis-Dizon-Resume.pdf` in the project root is the original source
 document and is not referenced by the site.
 
+## Fonts
+
+Manrope and DM Mono are self-hosted in `fonts/`, so the site makes no
+third-party requests. Refresh them with:
+
+```powershell
+python tools/fetch_fonts.py
+```
+
+Only the latin subsets are kept. The OFL licence files in `fonts/` must
+ship with the site.
+
+## Accessibility
+
+Every text element on the page and in all six dialogs meets WCAG AA
+(4.5:1); the lowest measured ratio is 4.84:1. `--muted` is tuned to sit
+just above the threshold on paper, so darken rather than lighten it if it
+ever changes. The micro-typography does render as small as 7.2px, which
+is legible but tight -- worth revisiting if you ever want the site to read
+more comfortably on small screens.
+
 ## Sharing card and favicon
 
 `output/og-image.png` is the 1200x630 social preview. It is generated from
