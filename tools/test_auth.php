@@ -60,28 +60,9 @@ function freshDatabase(): PDO
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
-    // The MySQL schema in database/schema.sql, expressed for SQLite.
-    $pdo->exec('CREATE TABLE users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        email TEXT NOT NULL UNIQUE,
-        password_hash TEXT NOT NULL,
-        display_name TEXT NOT NULL,
-        role TEXT NOT NULL DEFAULT "user",
-        status TEXT NOT NULL DEFAULT "active",
-        email_verified_at TEXT NULL,
-        last_login_at TEXT NULL,
-        created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL)');
-    $pdo->exec('CREATE TABLE user_sessions (
-        id TEXT PRIMARY KEY,
-        user_id INTEGER NOT NULL,
-        expires_at TEXT NOT NULL,
-        created_at TEXT NOT NULL)');
-    $pdo->exec('CREATE TABLE login_attempts (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        identifier TEXT NOT NULL,
-        successful INTEGER NOT NULL DEFAULT 0,
-        attempted_at TEXT NOT NULL)');
+    // Same SQLite schema the development server uses, so the tests and the
+    // running app can never drift apart.
+    $pdo->exec(file_get_contents(__DIR__ . '/../database/schema.sqlite.sql'));
     return $pdo;
 }
 

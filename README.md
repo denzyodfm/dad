@@ -6,11 +6,35 @@ generated resume PDF, and a PHP users-and-sessions backend in `app/`.
 ## Run
 
 ```powershell
-python -m http.server 4173 --bind 127.0.0.1
+php tools/serve.php
 ```
 
-Open `http://127.0.0.1:4173`. Serve from the project root — the résumé link
-is root-absolute (`/output/pdf/...`).
+Serves the static portfolio and the PHP account pages together on
+<http://127.0.0.1:8000>:
+
+| | |
+|---|---|
+| Portfolio | <http://127.0.0.1:8000/> |
+| Accounts | <http://127.0.0.1:8000/app/> |
+
+The first run creates a SQLite database in `.dev/` and writes a development
+`.env`, both git-ignored. Nothing to install beyond PHP -- MySQL is only
+needed for production. `php tools/serve.php 8080` picks another port and
+`php tools/serve.php --reset` starts from an empty database.
+
+It runs through `tools/router.php`, which applies the same file denials that
+`.htaccess` and `web.config` apply in production, so `.env`, the schema and
+the build scripts are unreachable locally too.
+
+There is no link from the portfolio to the account pages; the portfolio is
+public and `app/` is reached directly. Add one to the header when you decide
+what the accounts are for.
+
+For the static site on its own, any file server works:
+
+```powershell
+python -m http.server 4173 --bind 127.0.0.1
+```
 
 ## Palette
 
@@ -131,6 +155,9 @@ keep the portfolio static and put `app/` on a separate host.
 
 ### Setup
 
+For local work use `php tools/serve.php`, which needs none of this. For
+production:
+
 1. Import `database/schema.sql` into MySQL 8 (or MariaDB 10.4+).
 2. Copy `.env.example` to `.env` and fill it in.
 3. **Put `.env` one directory above the site root.** The app looks there
@@ -172,10 +199,11 @@ keep the portfolio static and put `app/` on a separate host.
 php tools/test_auth.php
 ```
 
-46 checks covering registration, sign-in, sessions, throttling, password
-change, CSRF and SQL injection. They run against in-memory SQLite so no
-server is needed; the app's SQL is plain portable statements with
-PHP-side timestamps, so MySQL behaves the same.
+Covers registration, sign-in, sessions, throttling, password change, CSRF
+and SQL injection. Runs against in-memory SQLite using the same
+`database/schema.sqlite.sql` the dev server uses, so the tests and the
+running app cannot drift apart. The app's SQL is plain portable statements
+with PHP-side timestamps, so MySQL behaves the same.
 
 Not built yet: email verification (the `email_verified_at` column is
 waiting for it), password reset, and an admin view of the `admin`/`editor`
