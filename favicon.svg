@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Dennis Dizon">
+  <style>
+    .bg{fill:#171714}
+    .fg{fill:#f2f0e9}
+    @media (prefers-color-scheme:dark){.bg{fill:#f2f0e9}.fg{fill:#171714}}
+  </style>
+  <circle class="bg" cx="16" cy="16" r="16"/>
+  <text class="fg" x="16" y="16.5" text-anchor="middle" dominant-baseline="central"
+        font-family="Manrope,Segoe UI,Arial,Helvetica,sans-serif" font-size="13" font-weight="700" letter-spacing="-.3">DD</text>
+</svg>

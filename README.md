@@ -39,6 +39,25 @@ for visual review.
 `Dennis-Dizon-Resume.pdf` in the project root is the original source
 document and is not referenced by the site.
 
+## Sharing card and favicon
+
+`output/og-image.png` is the 1200x630 social preview. It is generated from
+`tools/og-card.html`, which reuses the site palette and fonts:
+
+```powershell
+pip install pillow
+python tools/build_og_image.py
+```
+
+Regenerate it whenever the headline or the metrics change. `favicon.svg`
+inverts under `prefers-color-scheme: dark` so it stays legible on dark
+browser chrome.
+
+The `og:image` and `twitter:image` paths in `index.html` are root-absolute
+(`/output/og-image.png`). X, LinkedIn, Slack, and Discord resolve those
+against the page URL, but Facebook's scraper wants a full origin — once the
+site has a domain, prefix those two tags (and add `og:url`) with it.
+
 ## Rollback
 
 The project is a git repository. `git log` lists the checkpoints and
