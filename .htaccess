@@ -1,0 +1,17 @@
+# Apache. Other servers need their own rule -- see the Backend section of
+# README.md. The reliable protection is keeping .env above the web root;
+# this is defence in depth for hosts where that is not possible.
+
+# Never serve dotfiles (.env, .git, .gitattributes and friends).
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+RedirectMatch 404 /\.git
+
+# Nor the schema, the build tooling, or the PDF page renders.
+<FilesMatch "\.(sql|py|md)$">
+  Require all denied
+</FilesMatch>
+RedirectMatch 404 ^/(database|tools|tmp)/
+
+Options -Indexes

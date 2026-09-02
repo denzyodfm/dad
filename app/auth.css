@@ -1,0 +1,41 @@
+/* Account screens. Extends the site palette in ../styles.css.
+   Kept in a file rather than a <style> block because the pages send a
+   Content-Security-Policy of style-src 'self'. */
+
+.auth{display:grid;align-content:center;gap:1.4rem;max-width:30rem;padding:clamp(1.5rem,5vh,3rem) 0}
+.auth h1{margin:0;font-size:clamp(2rem,5vw,3.2rem);line-height:.95;font-weight:500;letter-spacing:-.05em}
+.auth h1 span{color:var(--blue)}
+.auth>p{margin:0;color:#4e4d47;font-size:.85rem;line-height:1.55}
+
+.field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.field label{color:var(--muted);font:500 .55rem var(--mono);text-transform:uppercase;letter-spacing:.07em}
+.field input{padding:.7rem .8rem;border:1px solid var(--line);border-radius:0;background:#fff;color:var(--ink);
+  font:400 .9rem var(--display)}
+.field input:focus-visible{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+.field .hint{color:var(--muted);font-size:.7rem;line-height:1.4}
+
+.submit{padding:.8rem 1.2rem;border:0;background:var(--ink);color:var(--paper);cursor:pointer;
+  font:500 .58rem var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.submit:hover{background:var(--blue)}
+
+.notice{margin:0 0 1.2rem;padding:.8rem .9rem;border-left:3px solid;font-size:.8rem;line-height:1.5}
+.notice.error{border-color:#b3341c;background:rgb(179 52 28/.07);color:#7d2413}
+.notice.ok{border-color:#3b9c5b;background:rgb(59 156 91/.09);color:#245f38}
+
+.auth-alt{margin:0;color:var(--muted);font-size:.78rem}
+.auth-alt a{color:var(--blue);border-bottom:1px solid}
+
+.account-facts{margin:.4rem 0 0;padding-top:1rem;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 2rem}
+.account-facts div{display:flex;flex-direction:column;gap:.3rem}
+.account-facts span{color:var(--muted);font:500 .48rem var(--mono);text-transform:uppercase}
+.account-facts strong{font-size:.8rem;font-weight:600;line-height:1.35;overflow-wrap:anywhere}
+
+.panel{margin-top:.6rem;padding-top:1.4rem;border-top:1px solid var(--line)}
+.panel h2{margin:0 0 1rem;font-size:1.1rem;font-weight:600;letter-spacing:-.02em}
+
+.signout{display:inline;margin:0}
+.signout button{padding:0;border:0;border-bottom:1px solid;background:none;color:inherit;cursor:pointer;
+  font:500 .55rem var(--mono);text-transform:uppercase;letter-spacing:.04em}
+
+@media(max-width:560px){.account-facts{grid-template-columns:1fr}}

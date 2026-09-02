@@ -1,6 +1,7 @@
 # Dennis Dizon Portfolio
 
-Compact static portfolio with accessible native dialogs for project details.
+Compact portfolio site with accessible native dialogs for project details, a
+generated resume PDF, and a PHP users-and-sessions backend in `app/`.
 
 ## Run
 
@@ -111,9 +112,77 @@ The project is a git repository. `git log` lists the checkpoints and
 `git checkout -- .` restores the last committed state. Binary assets are
 marked in `.gitattributes` so the PDF and PNGs survive a checkout intact.
 
+## Backend
+
+`app/` is a PHP implementation of the users and sessions layer that
+`database/schema.sql` describes: registration, sign-in, sign-out, an account
+page and a password change.
+
+PHP was chosen because it drops in beside the static files with no build
+step or process manager, it matches the MySQL schema already written, and it
+runs on ordinary shared hosting.
+
+### Important: the static host cannot run this
+
+GitHub Pages, and any other static host, serves files only. The portfolio
+page and the account pages therefore cannot live on the same host unless
+that host runs PHP and MySQL. Either put the whole site on PHP hosting, or
+keep the portfolio static and put `app/` on a separate host.
+
+### Setup
+
+1. Import `database/schema.sql` into MySQL 8 (or MariaDB 10.4+).
+2. Copy `.env.example` to `.env` and fill it in.
+3. **Put `.env` one directory above the site root.** The app looks there
+   first and only falls back to the project root. A `.env` inside the web
+   root is served as plain text by default and hands over your database
+   password -- `.htaccess` and `web.config` block it on Apache and IIS, but
+   nginx needs its own rule:
+
+   ```nginx
+   location ~ /\. { deny all; }
+   location ~ ^/(database|tools|tmp)/ { deny all; }
+   ```
+
+4. Point the browser at `app/` (`app/login.php`).
+
+### What it does
+
+- Passwords hashed with Argon2id, falling back to bcrypt at cost 12 where
+  the host lacks Argon2. Stored hashes are upgraded on the next sign-in.
+- Sessions are server-side rows in `user_sessions`. The cookie holds a
+  random 256-bit token and the table stores only its SHA-256 hash, so a
+  database dump cannot be replayed as a live session. Cookies are HttpOnly,
+  SameSite=Lax, and Secure over HTTPS.
+- Failed sign-ins are throttled per email and per IP. The IP budget is six
+  times the email budget, because schools, offices and mobile networks put
+  many people behind one address. Registration deliberately bypasses the
+  sign-in throttle, so a stranger's failures cannot block a new account.
+- CSRF via a double-submit HttpOnly cookie; sign-out is POST-only.
+- Sign-in failures are indistinguishable whether the account is unknown,
+  the password is wrong, or the account is disabled, and an unknown address
+  still costs a password hash so timing does not leak either.
+- Changing a password revokes every existing session.
+- Every page sends CSP, X-Frame-Options, X-Content-Type-Options and
+  Referrer-Policy, and `noindex`.
+
+### Tests
+
+```powershell
+php tools/test_auth.php
+```
+
+46 checks covering registration, sign-in, sessions, throttling, password
+change, CSRF and SQL injection. They run against in-memory SQLite so no
+server is needed; the app's SQL is plain portable statements with
+PHP-side timestamps, so MySQL behaves the same.
+
+Not built yet: email verification (the `email_verified_at` column is
+waiting for it), password reset, and an admin view of the `admin`/`editor`
+roles the schema allows.
+
 ## Future users
 
-The site is currently static. `database/schema.sql` provides a MySQL
-foundation for future users and server-side sessions. Copy `.env.example`
-into the future backend environment. Never expose database credentials in
-browser JavaScript, and hash passwords with Argon2id or bcrypt.
+`database/schema.sql` also allows `admin` and `editor` roles and an
+`email_verified_at` timestamp; neither is used by the current screens.
+Never expose database credentials to browser JavaScript.

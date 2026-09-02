@@ -1,0 +1,5 @@
+# bootstrap.php is an include, not a page.
+<FilesMatch "^bootstrap\.php$">
+  Require all denied
+</FilesMatch>
+Options -Indexes

@@ -23,3 +23,14 @@ CREATE TABLE IF NOT EXISTS user_sessions (
   PRIMARY KEY (id), KEY sessions_user_index (user_id), KEY sessions_expiry_index (expires_at),
   CONSTRAINT sessions_user_foreign FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+-- Throttles credential stuffing and password guessing. Rows are recorded per
+-- email and per client address, and pruned once outside the lockout window.
+CREATE TABLE IF NOT EXISTS login_attempts (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  identifier VARCHAR(255) NOT NULL,
+  successful TINYINT(1) NOT NULL DEFAULT 0,
+  attempted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id), KEY attempts_lookup_index (identifier, attempted_at)
+) ENGINE=InnoDB;
+
