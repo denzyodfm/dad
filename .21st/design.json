@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "project": {
+    "name": "dad",
+    "productType": null,
+    "stack": []
+  },
+  "sources": {
+    "tokens": [],
+    "components": [],
+    "assets": [],
+    "instructions": []
+  },
+  "design": {
+    "colorMode": "unknown",
+    "colors": {},
+    "typography": {},
+    "spacing": {},
+    "radius": {},
+    "shadows": {},
+    "motion": {},
+    "density": "unknown"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": []
+  },
+  "constraints": {
+    "must": [],
+    "avoid": []
+  },
+  "decisions": [
+    {
+      "choice": "Three-color portfolio palette: warm paper, near-black, and cobalt",
+      "reason": "Creates visual cohesion and lets hierarchy come from typography and contrast rather than decorative color"
+    },
+    {
+      "choice": "Editorial portfolio with warm neutral canvas, ink project gallery, and cobalt contact field",
+      "reason": "Creates a distinctive, contemporary identity while keeping project work and contact intent primary"
+    },
+    {
+      "choice": "Self-contained graphic project mockups",
+      "reason": "Keeps the first-run experience complete without stock imagery or external asset dependencies"
+    },
+    {
+      "choice": "Outcome-led technical portfolio for Dennis Dizon",
+      "reason": "Positions FileMaker delivery and IT infrastructure as a unified practice, grounded in quantified résumé results"
+    }
+  ],
+  "evidence": [],
+  "generatedAt": "2026-09-02T09:46:28.678Z"
+}

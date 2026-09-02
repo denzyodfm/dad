@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dennis Dizon is a FileMaker developer and IT specialist building secure business systems and reliable infrastructure." />
+  <meta name="theme-color" content="#f2f0e9" />
+  <title>Dennis Dizon — FileMaker Developer & IT Specialist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* One restrained palette: warm paper, near-black, and cobalt. */
+    .project.blue,.project.lime{background:var(--blue);color:white}
+    .project.sand{background:var(--ink);color:var(--paper)}
+    .project.orange{background:var(--paper);color:var(--ink);border:1px solid var(--ink)}
+  </style>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="shell">
+    <header class="site-header">
+      <a class="brand" href="#main"><span class="brand-mark">DD</span><span>Dennis Dizon</span></a>
+      <p class="role">FileMaker Developer / IT Specialist</p>
+      <div class="header-actions"><span class="available"><i></i>Available</span><a href="/output/pdf/Dennis-Dizon-Resume-Professional.pdf" download="Dennis-Dizon-Resume-Professional.pdf" type="application/pdf">Résumé ↓</a></div>
+    </header>
+
+    <main id="main">
+      <section class="intro" aria-labelledby="intro-title">
+        <div><p class="eyebrow">Butuan City, Philippines · 7+ years building custom applications</p><h1 id="intro-title">Business systems,<br /><span>without the friction.</span></h1></div>
+        <div class="intro-side">
+          <p>I turn complex operations into secure FileMaker apps and keep the infrastructure behind them fast, connected, and reliable.</p>
+          <div class="inline-buttons"><button type="button" data-dialog="about-dialog">About me ↗</button><button type="button" data-dialog="github-dialog">More on GitHub ↗</button></div>
+        </div>
+      </section>
+
+      <section class="projects" aria-labelledby="projects-title">
+        <div class="section-label"><p class="eyebrow">Selected systems</p><h2 id="projects-title">Work</h2></div>
+        <article class="project blue"><div class="card-top"><span>01</span><span>FileMaker · API</span></div><div><small>Multi-branch operations</small><h3>Centralized<br />Lending</h3></div><button type="button" data-dialog="lending-dialog">Details ↗</button></article>
+        <article class="project sand"><div class="card-top"><span>02</span><span>150+ employees</span></div><div><small>People operations</small><h3>HR Information<br />System</h3></div><button type="button" data-dialog="hris-dialog">Details ↗</button></article>
+        <article class="project orange"><div class="card-top"><span>03</span><span>Next.js · Supabase</span></div><div><small>Modern web product</small><h3>Resort<br />Booking</h3></div><button type="button" data-dialog="booking-dialog">Details ↗</button></article>
+        <article class="project lime"><div class="card-top"><span>04</span><span>SMS · Email · API</span></div><div><small>Automated communication</small><h3>Real-Time<br />Alerts</h3></div><button type="button" data-dialog="alerts-dialog">Details ↗</button></article>
+      </section>
+
+      <section class="bottom" aria-label="Career overview">
+        <div class="metrics"><div><strong>40%</strong><span>less manual entry</span></div><div><strong>30%</strong><span>faster processing</span></div><div><strong>99%</strong><span>uptime</span></div><div><strong>10+</strong><span>years in IT</span></div></div>
+        <div class="stack"><p class="eyebrow">Core stack</p><p>FileMaker · WebDirect · REST/JSON · SQL · PHP · JavaScript · Windows/Linux · Hyper-V</p></div>
+        <a class="contact" href="mailto:denzyodfm@gmail.com"><span>Have a system in mind?</span><strong>Let's talk ↗</strong></a>
+      </section>
+    </main>
+
+    <footer><span>© 2026 Dennis Dizon</span><a href="tel:+639095994462"><b>Phone</b> +63 909 599 4462</a><a href="mailto:denzyodfm@gmail.com"><b>Email</b> denzyodfm@gmail.com</a></footer>
+  </div>
+
+  <dialog id="about-dialog"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">Profile</p><h2>Applications and infrastructure, together.</h2><p>I'm a results-driven developer with 7+ years of end-to-end FileMaker delivery and more than a decade in IT infrastructure. At Valdemer Resources, I build operational systems and oversee the networks and servers behind them.</p><div class="facts"><div><span>Current role</span><strong>Senior FileMaker Developer / IT Specialist</strong></div><div><span>Education</span><strong>MS Information Technology</strong></div><div><span>Specialty</span><strong>Secure multi-user business systems</strong></div><div><span>Location</span><strong>Butuan City, Philippines</strong></div></div><a class="dialog-action" href="/output/pdf/Dennis-Dizon-Resume-Professional.pdf" download="Dennis-Dizon-Resume-Professional.pdf" type="application/pdf">Download résumé ↓</a></dialog>
+  <dialog id="lending-dialog"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">01 / Centralized Lending</p><h2>One platform across every branch.</h2><p>A unified FileMaker platform for client verification, loan origination, approval, credit scoring, payment monitoring, and remedial action. REST services connect database events with automated SMS notifications.</p><div class="facts"><div><span>Outcome</span><strong>30% fewer processing delays</strong></div><div><span>Scope</span><strong>Multi-branch synchronization</strong></div><div><span>Stack</span><strong>FileMaker Server · Data API · REST</strong></div><div><span>Security</span><strong>Roles · Encryption · Off-site backups</strong></div></div><a class="dialog-action" href="https://github.com/denzyodfm/alc-client-inquiry-system" target="_blank" rel="noreferrer">View related repository ↗</a></dialog>
+  <dialog id="hris-dialog"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">02 / HR Information System</p><h2>People operations in one workflow.</h2><p>A FileMaker solution for leave filing, medical reimbursement, performance evaluations, and payroll processing—replacing disconnected spreadsheets with traceable processes.</p><div class="facts"><div><span>Reach</span><strong>150+ employees</strong></div><div><span>Outcome</span><strong>40% less manual entry</strong></div><div><span>Modules</span><strong>HR · Payroll · Claims · Evaluation</strong></div><div><span>Delivery</span><strong>Multi-device layouts and reporting</strong></div></div></dialog>
+  <dialog id="booking-dialog"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">03 / Resort Booking</p><h2>A clear path from search to stay.</h2><p>A responsive cottage booking application built around availability, clear choices, and a streamlined reservation flow, with architecture ready for Supabase-backed authentication and data.</p><div class="facts"><div><span>Frontend</span><strong>Next.js · React · TypeScript</strong></div><div><span>Interface</span><strong>Tailwind CSS · Responsive UI</strong></div><div><span>Data</span><strong>Supabase-ready APIs</strong></div><div><span>Focus</span><strong>Booking clarity and conversion</strong></div></div><a class="dialog-action" href="https://github.com/denzyodfm/beach-resort-booking" target="_blank" rel="noreferrer">View repository ↗</a></dialog>
+  <dialog id="alerts-dialog"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">04 / Alert Engine</p><h2>The right message at the right time.</h2><p>Instant and scheduled client and staff notifications sent from FileMaker workflows across SMS, email, MMS, and Telegram delivery channels.</p><div class="facts"><div><span>Channels</span><strong>SMS · Email · MMS · Telegram</strong></div><div><span>Integration</span><strong>Globe M360 · SMTP · Telegram API</strong></div><div><span>Modes</span><strong>Real-time and scheduled</strong></div><div><span>Source</span><strong>Operational FileMaker events</strong></div></div></dialog>
+  <dialog id="github-dialog"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">Distinct GitHub projects</p><h2>More systems in the workshop.</h2><p>Additional public projects selected without repeating the lending and booking applications already featured above.</p><div class="repo-list"><a href="https://github.com/denzyodfm/fuel-monitoring" target="_blank" rel="noreferrer"><span>Fuel Monitoring</span><b>Operations dashboard ↗</b></a><a href="https://github.com/denzyodfm/sfxc-activity-request" target="_blank" rel="noreferrer"><span>SFXC Activity Request</span><b>Request workflow ↗</b></a><a href="https://github.com/denzyodfm/chapel-collection-system" target="_blank" rel="noreferrer"><span>Chapel Collection System</span><b>Collection tracking ↗</b></a><a href="https://github.com/denzyodfm/zyeon-tire-trading" target="_blank" rel="noreferrer"><span>Zyeon Tire Trading</span><b>Trading system ↗</b></a></div><a class="dialog-action" href="https://github.com/denzyodfm" target="_blank" rel="noreferrer">Open GitHub profile ↗</a></dialog>
+</body>
+</html>
