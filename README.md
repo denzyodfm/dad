@@ -79,6 +79,32 @@ The `og:image` and `twitter:image` paths in `index.html` are root-absolute
 against the page URL, but Facebook's scraper wants a full origin — once the
 site has a domain, prefix those two tags (and add `og:url`) with it.
 
+## Deploying
+
+All asset paths are relative, so the site runs unchanged from a domain
+root or a subpath such as a GitHub project page. Nothing is built or
+bundled; the repository root is the site.
+
+- **GitHub Pages** - `.github/workflows/pages.yml` publishes on every push
+  to `main`. Enable it once under Settings -> Pages -> Source -> GitHub
+  Actions. `.nojekyll` stops Jekyll from filtering files.
+- **Netlify / Cloudflare Pages / Vercel** - no build command, publish
+  directory `.`.
+
+`404.html` is styled to match and is picked up automatically by GitHub
+Pages, Netlify and Cloudflare Pages.
+
+Once the site has a real domain, prefix `og:image` and `twitter:image` in
+`index.html` with the origin and add an `og:url`, since Facebook's scraper
+will not resolve relative image paths.
+
+## Printing
+
+`styles.css` ends with a print block: the page prints to a single page with
+no filled backgrounds, the dialogs and interactive controls removed, and the
+project cards drawn as outlined boxes. The detailed document for sending to
+people is the generated resume PDF, not the printed page.
+
 ## Rollback
 
 The project is a git repository. `git log` lists the checkpoints and
