@@ -34,3 +34,54 @@ CREATE TABLE IF NOT EXISTS login_attempts (
   attempted_at TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS attempts_lookup_index ON login_attempts (identifier, attempted_at);
+
+CREATE TABLE IF NOT EXISTS content_types (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  placement TEXT NOT NULL DEFAULT 'writing',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS entries (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  type_id INTEGER NOT NULL,
+  author_id INTEGER NULL,
+  slug TEXT NOT NULL UNIQUE,
+  title TEXT NOT NULL,
+  summary TEXT NULL,
+  body TEXT NULL,
+  category TEXT NULL,
+  status TEXT NOT NULL DEFAULT 'draft',
+  published_at TEXT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  accent TEXT NOT NULL DEFAULT 'cobalt',
+  kicker TEXT NULL,
+  meta TEXT NULL,
+  card_heading TEXT NULL,
+  link_url TEXT NULL,
+  link_label TEXT NULL,
+  cover_path TEXT NULL,
+  cover_alt TEXT NULL,
+  media_path TEXT NULL,
+  media_kind TEXT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  FOREIGN KEY (type_id) REFERENCES content_types(id),
+  FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
+);
+CREATE INDEX IF NOT EXISTS entries_status_index ON entries (status, published_at);
+CREATE INDEX IF NOT EXISTS entries_type_index ON entries (type_id, sort_order);
+
+CREATE TABLE IF NOT EXISTS entry_facts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  entry_id INTEGER NOT NULL,
+  label TEXT NOT NULL,
+  value TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  FOREIGN KEY (entry_id) REFERENCES entries(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS entry_facts_entry_index ON entry_facts (entry_id, sort_order);
+

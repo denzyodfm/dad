@@ -1,3 +1,19 @@
+<?php
+declare(strict_types=1);
+
+namespace App;
+
+/**
+ * The public portfolio. The project cards and their detail panels come from
+ * the content tables; everything else is fixed copy.
+ */
+
+require_once __DIR__ . '/app/bootstrap.php';
+
+$content = new Content($pdo);
+$cards = $content->portfolioCards();
+$writing = $content->writingEntries();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -77,10 +93,9 @@
 
       <section class="projects" aria-labelledby="projects-title">
         <div class="section-label"><p class="eyebrow">Selected systems</p><h2 id="projects-title">Work</h2></div>
-        <article class="project cobalt"><div class="card-top"><span>01</span><span>FileMaker · API</span></div><div><small>Multi-branch operations</small><h3>Centralized<br />Lending</h3></div><button type="button" data-dialog="lending-dialog" aria-label="Details: Centralized Lending">Details ↗</button></article>
-        <article class="project ink"><div class="card-top"><span>02</span><span>150+ employees</span></div><div><small>People operations</small><h3>HR Information<br />System</h3></div><button type="button" data-dialog="hris-dialog" aria-label="Details: HR Information System">Details ↗</button></article>
-        <article class="project outline"><div class="card-top"><span>03</span><span>Next.js · Supabase</span></div><div><small>Modern web product</small><h3>Resort<br />Booking</h3></div><button type="button" data-dialog="booking-dialog" aria-label="Details: Resort Booking">Details ↗</button></article>
-        <article class="project outline-cobalt"><div class="card-top"><span>04</span><span>SMS · Email · API</span></div><div><small>Automated communication</small><h3>Real-Time<br />Alerts</h3></div><button type="button" data-dialog="alerts-dialog" aria-label="Details: Real-Time Alerts">Details ↗</button></article>
+<?php foreach ($cards as $index => $card): ?>
+        <article class="project <?= e($card['accent']) ?>"><div class="card-top"><span><?= sprintf('%02d', $index + 1) ?></span><span><?= e($card['meta']) ?></span></div><div><small><?= e($card['kicker']) ?></small><h3><?= card_heading($card) ?></h3></div><button type="button" data-dialog="entry-<?= (int) $card['id'] ?>" aria-label="Details: <?= e($card['title']) ?>">Details &#8599;</button></article>
+<?php endforeach; ?>
       </section>
 
       <section class="bottom" aria-label="Career overview">
@@ -94,10 +109,9 @@
   </div>
 
   <dialog id="about-dialog" aria-labelledby="about-dialog-title"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">Profile</p><h2 id="about-dialog-title">Applications and infrastructure, together.</h2><p>I'm a results-driven developer with 7+ years of end-to-end FileMaker delivery and more than a decade in IT infrastructure. At Valdemer Resources, I build operational systems and oversee the networks and servers behind them.</p><div class="facts"><div><span>Current role</span><strong>Senior FileMaker Developer / IT Specialist</strong></div><div><span>Education</span><strong>MS Information Technology</strong></div><div><span>Specialty</span><strong>Secure multi-user business systems</strong></div><div><span>Location</span><strong>Butuan City, Philippines</strong></div></div><a class="dialog-action" href="output/pdf/Dennis-Dizon-Resume-Professional.pdf" download="Dennis-Dizon-Resume-Professional.pdf" type="application/pdf">Download résumé ↓</a></dialog>
-  <dialog id="lending-dialog" aria-labelledby="lending-dialog-title"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">01 / Centralized Lending</p><h2 id="lending-dialog-title">One platform across every branch.</h2><p>A unified FileMaker platform for client verification, loan origination, approval, credit scoring, payment monitoring, and remedial action. REST services connect database events with automated SMS notifications.</p><div class="facts"><div><span>Outcome</span><strong>30% fewer processing delays</strong></div><div><span>Scope</span><strong>Multi-branch synchronization</strong></div><div><span>Stack</span><strong>FileMaker Server · Data API · REST</strong></div><div><span>Security</span><strong>Roles · Encryption · Off-site backups</strong></div></div><a class="dialog-action" href="https://github.com/denzyodfm/alc-client-inquiry-system" target="_blank" rel="noreferrer">View related repository ↗</a></dialog>
-  <dialog id="hris-dialog" aria-labelledby="hris-dialog-title"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">02 / HR Information System</p><h2 id="hris-dialog-title">People operations in one workflow.</h2><p>A FileMaker solution for leave filing, medical reimbursement, performance evaluations, and payroll processing—replacing disconnected spreadsheets with traceable processes.</p><div class="facts"><div><span>Reach</span><strong>150+ employees</strong></div><div><span>Outcome</span><strong>40% less manual entry</strong></div><div><span>Modules</span><strong>HR · Payroll · Claims · Evaluation</strong></div><div><span>Delivery</span><strong>Multi-device layouts and reporting</strong></div></div></dialog>
-  <dialog id="booking-dialog" aria-labelledby="booking-dialog-title"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">03 / Resort Booking</p><h2 id="booking-dialog-title">A clear path from search to stay.</h2><p>A responsive cottage booking application built around availability, clear choices, and a streamlined reservation flow, with architecture ready for Supabase-backed authentication and data.</p><div class="facts"><div><span>Frontend</span><strong>Next.js · React · TypeScript</strong></div><div><span>Interface</span><strong>Tailwind CSS · Responsive UI</strong></div><div><span>Data</span><strong>Supabase-ready APIs</strong></div><div><span>Focus</span><strong>Booking clarity and conversion</strong></div></div><a class="dialog-action" href="https://github.com/denzyodfm/beach-resort-booking" target="_blank" rel="noreferrer">View repository ↗</a></dialog>
-  <dialog id="alerts-dialog" aria-labelledby="alerts-dialog-title"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">04 / Alert Engine</p><h2 id="alerts-dialog-title">The right message at the right time.</h2><p>Instant and scheduled client and staff notifications sent from FileMaker workflows across SMS, email, MMS, and Telegram delivery channels.</p><div class="facts"><div><span>Channels</span><strong>SMS · Email · MMS · Telegram</strong></div><div><span>Integration</span><strong>Globe M360 · SMTP · Telegram API</strong></div><div><span>Modes</span><strong>Real-time and scheduled</strong></div><div><span>Source</span><strong>Operational FileMaker events</strong></div></div></dialog>
+<?php foreach ($cards as $index => $card): ?>
+  <dialog id="entry-<?= (int) $card['id'] ?>" aria-labelledby="entry-<?= (int) $card['id'] ?>-title"><button class="close" data-close aria-label="Close">&times;</button><p class="eyebrow"><?= sprintf('%02d', $index + 1) ?> / <?= e($card['title']) ?></p><h2 id="entry-<?= (int) $card['id'] ?>-title"><?= e($card['summary']) ?></h2><?= safe_html($card['body']) ?><?php if ($card['facts'] !== []): ?><div class="facts"><?php foreach ($card['facts'] as $fact): ?><div><span><?= e($fact['label']) ?></span><strong><?= e($fact['value']) ?></strong></div><?php endforeach; ?></div><?php endif; ?><?php if (!empty($card['cover_path'])): ?><img class="entry-cover" src="output/uploads/<?= e($card['cover_path']) ?>" alt="<?= e($card['cover_alt']) ?>" loading="lazy" /><?php endif; ?><?php if (!empty($card['media_path'])): ?><?= media_player($card) ?><?php endif; ?><?php if (!empty($card['link_url'])): ?><a class="dialog-action" href="<?= e($card['link_url']) ?>" target="_blank" rel="noreferrer"><?= e($card['link_label'] ?: 'Open link') ?> &#8599;</a><?php endif; ?></dialog>
+<?php endforeach; ?>
   <dialog id="github-dialog" aria-labelledby="github-dialog-title"><button class="close" data-close aria-label="Close">×</button><p class="eyebrow">Distinct GitHub projects</p><h2 id="github-dialog-title">More systems in the workshop.</h2><p>Additional public projects selected without repeating the lending and booking applications already featured above.</p><div class="repo-list"><a href="https://github.com/denzyodfm/fuel-monitoring" target="_blank" rel="noreferrer"><span>Fuel Monitoring</span><b>Operations dashboard ↗</b></a><a href="https://github.com/denzyodfm/sfxc-activity-request" target="_blank" rel="noreferrer"><span>SFXC Activity Request</span><b>Request workflow ↗</b></a><a href="https://github.com/denzyodfm/chapel-collection-system" target="_blank" rel="noreferrer"><span>Chapel Collection System</span><b>Collection tracking ↗</b></a><a href="https://github.com/denzyodfm/zyeon-tire-trading" target="_blank" rel="noreferrer"><span>Zyeon Tire Trading</span><b>Trading system ↗</b></a></div><a class="dialog-action" href="https://github.com/denzyodfm" target="_blank" rel="noreferrer">Open GitHub profile ↗</a></dialog>
 </body>
 </html>

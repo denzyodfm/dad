@@ -82,3 +82,52 @@ function e(?string $value): string
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 }
+
+/**
+ * Renders an entry body, which is stored as HTML written in the studio.
+ *
+ * Only the administrator can write it, and the page's CSP already refuses
+ * inline scripts, but the body is still reduced to a small tag allowlist with
+ * event handlers and javascript: URLs stripped. Defence in depth costs
+ * nothing here and keeps a mistake in the editor from breaking the page.
+ */
+function safe_html(?string $html): string
+{
+    $html = (string) $html;
+    if (trim($html) === '') {
+        return '';
+    }
+    $allowed = '<p><br><b><strong><i><em><ul><ol><li><blockquote><h3><h4><code><pre><a>';
+    $html = strip_tags($html, $allowed);
+    $html = preg_replace('/\son[a-z]+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html) ?? $html;
+    $html = preg_replace('/\s(href|src)\s*=\s*(["\']?)\s*javascript:[^"\'>\s]*\2/i', '', $html) ?? $html;
+    return $html;
+}
+
+/**
+ * The heading shown on a project card.
+ *
+ * Falls back to the title. A vertical bar forces a line break, which is how
+ * the cards keep their two-line rhythm without putting markup in the title.
+ */
+function card_heading(array $entry): string
+{
+    $heading = trim((string) ($entry['card_heading'] ?? ''));
+    if ($heading === '') {
+        $heading = (string) $entry['title'];
+    }
+    return implode('<br />', array_map(e(...), explode('|', $heading)));
+}
+
+/** An <audio> or <video> element for an entry's attachment. */
+function media_player(array $entry): string
+{
+    $src = 'output/uploads/' . rawurlencode((string) $entry['media_path']);
+    $label = e((string) ($entry['title'] ?? 'Attachment'));
+    if (($entry['media_kind'] ?? '') === 'video') {
+        return '<video class="entry-media" controls preload="metadata" src="' . e($src)
+            . '" title="' . $label . '"></video>';
+    }
+    return '<audio class="entry-media" controls preload="metadata" src="' . e($src)
+        . '" title="' . $label . '"></audio>';
+}

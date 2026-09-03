@@ -106,21 +106,26 @@ site has a domain, prefix those two tags (and add `og:url`) with it.
 
 ## Deploying
 
-All asset paths are relative, so the site runs unchanged from a domain
-root or a subpath such as a GitHub project page. Nothing is built or
-bundled; the repository root is the site.
+The whole site now needs PHP and MySQL: the home page is `index.php` and it
+reads the project cards from the database. Static hosting such as GitHub
+Pages can no longer serve it, so the Pages workflow was removed.
 
-- **GitHub Pages** - `.github/workflows/pages.yml` publishes on every push
-  to `main`. Enable it once under Settings -> Pages -> Source -> GitHub
-  Actions. `.nojekyll` stops Jekyll from filtering files.
-- **Netlify / Cloudflare Pages / Vercel** - no build command, publish
-  directory `.`.
+All asset paths are relative, so the site runs from a domain root or a
+subpath. Nothing is built or bundled; the repository root is the site.
 
-`404.html` is styled to match and is picked up automatically by GitHub
-Pages, Netlify and Cloudflare Pages.
+Requirements: PHP 8.1+ with `pdo_mysql`, and MySQL 8 or MariaDB 10.4+.
+Point the web root at the repository root and make sure `.env` sits above
+it -- see Backend below.
+
+Because the home page reads the database, a database outage takes the
+portfolio down with it, which was not true of the old static page. If that
+matters, put a cache in front of it.
+
+`404.html` is styled to match and is picked up automatically by Apache,
+Netlify and Cloudflare Pages.
 
 Once the site has a real domain, prefix `og:image` and `twitter:image` in
-`index.html` with the origin and add an `og:url`, since Facebook's scraper
+`index.php` with the origin and add an `og:url`, since Facebook's scraper
 will not resolve relative image paths.
 
 ## Printing
