@@ -197,6 +197,34 @@ check('the old password stops working',
 check('the new password works', (int) $auth->login('p@example.com', 'a brand new passphrase')['id'] === $id);
 check('changing the password revokes existing sessions', $sessions->userId($t1) === null);
 
+echo "\nAdministrators\n";
+[$auth, $sessions, $limiter, $pdo] = makeAuth();
+[$adminId, $created] = $auth->upsertAdmin('boss@example.com', $GOOD, 'The Boss');
+check('creates a new admin', $created && $adminId > 0);
+check('the role is admin',
+    $pdo->query("SELECT role FROM users WHERE id = {$adminId}")->fetchColumn() === 'admin');
+$auth->login('boss@example.com', $GOOD);
+check('isAdmin() is true for an admin', $auth->isAdmin());
+
+$plainId = $auth->register('plain@example.com', $GOOD, 'Plain Person');
+$auth->logout();
+$auth->login('plain@example.com', $GOOD);
+check('isAdmin() is false for an ordinary user', !$auth->isAdmin());
+
+$staleToken = $sessions->start($adminId);
+[$sameId, $createdAgain] = $auth->upsertAdmin('boss@example.com', 'a different long passphrase', 'The Boss');
+check('re-running targets the same account', $sameId === $adminId && !$createdAgain);
+check('re-running revokes existing sessions', $sessions->userId($staleToken) === null);
+$auth->logout();
+check('the new password works',
+    (int) $auth->login('boss@example.com', 'a different long passphrase')['id'] === $adminId);
+check('promoting an ordinary user makes them admin', (function () use ($auth, $pdo, $plainId, $GOOD): bool {
+    $auth->upsertAdmin('plain@example.com', $GOOD, 'Plain Person');
+    return $pdo->query("SELECT role FROM users WHERE id = {$plainId}")->fetchColumn() === 'admin';
+})());
+check('a weak password is still refused',
+    refused(fn() => $auth->upsertAdmin('boss@example.com', 'short', 'The Boss')) !== '');
+
 echo "\nCSRF\n";
 check('a matching token validates', (function (): bool {
     $_COOKIE['csrf'] = str_repeat('b', 64);

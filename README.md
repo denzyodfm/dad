@@ -139,8 +139,12 @@ marked in `.gitattributes` so the PDF and PNGs survive a checkout intact.
 ## Backend
 
 `app/` is a PHP implementation of the users and sessions layer that
-`database/schema.sql` describes: registration, sign-in, sign-out, an account
-page and a password change.
+`database/schema.sql` describes: sign-in, sign-out, an account page and a
+password change.
+
+There is no public sign-up. This is a single-administrator site, so accounts
+are created from the command line with `tools/create_admin.php`;
+`app/register.php` only explains that.
 
 PHP was chosen because it drops in beside the static files with no build
 step or process manager, it matches the MySQL schema already written, and it
@@ -171,7 +175,16 @@ production:
    location ~ ^/(database|tools|tmp)/ { deny all; }
    ```
 
-4. Point the browser at `app/` (`app/login.php`).
+4. Create the administrator:
+
+   ```powershell
+   php tools/create_admin.php you@example.com "Dennis Dizon"
+   ```
+
+   It prints a generated password once, or takes one as a third argument.
+   Re-running it resets that account's password and signs out its sessions.
+
+5. Point the browser at `app/` (`app/login.php`).
 
 ### What it does
 

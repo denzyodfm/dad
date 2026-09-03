@@ -138,6 +138,62 @@ final class Auth
         return $this->cachedUser = $user;
     }
 
+    /**
+     * Creates an administrator, or resets an existing account to be one.
+     * Intended for the command line; there is no self-registration.
+     *
+     * @return array{0:int,1:bool} The user id, and whether it was newly created.
+     */
+    public function upsertAdmin(string $email, string $password, string $displayName): array
+    {
+        $normalised = self::normaliseEmail($email);
+        $statement = $this->pdo->prepare('SELECT id FROM users WHERE email = ?');
+        $statement->execute([$normalised]);
+        $found = $statement->fetch();
+
+        if ($found === false) {
+            $id = $this->register($email, $password, $displayName);
+            $this->pdo->prepare('UPDATE users SET role = ?, updated_at = ? WHERE id = ?')
+                ->execute(['admin', gmdate('Y-m-d H:i:s'), $id]);
+            return [$id, true];
+        }
+
+        $id = (int) $found['id'];
+        self::assertPasswordIsAcceptable($password, $normalised, $displayName);
+        $this->pdo->prepare(
+            'UPDATE users SET password_hash = ?, display_name = ?, role = ?, status = ?, updated_at = ? WHERE id = ?'
+        )->execute([self::hash($password), trim($displayName), 'admin', 'active', gmdate('Y-m-d H:i:s'), $id]);
+        // Anything signed in with the previous password is revoked.
+        $this->sessions->destroyAllFor($id);
+        $this->cachedUser = null;
+        return [$id, false];
+    }
+
+    public function isAdmin(): bool
+    {
+        $user = $this->user();
+        return $user !== null && $user['role'] === 'admin';
+    }
+
+    /** Sends anyone who is not a signed-in admin to the sign-in page. */
+    public function requireAdmin(): array
+    {
+        $user = $this->user();
+        if ($user === null) {
+            Http::redirect('login.php');
+        }
+        if ($user['role'] !== 'admin') {
+            http_response_code(403);
+            exit('This area is for administrators.');
+        }
+        return $user;
+    }
+
+    public function userCount(): int
+    {
+        return (int) $this->pdo->query('SELECT COUNT(*) FROM users')->fetchColumn();
+    }
+
     public function logout(): void
     {
         $this->sessions->destroy();
