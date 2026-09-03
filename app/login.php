@@ -6,7 +6,7 @@ namespace App;
 require_once __DIR__ . '/bootstrap.php';
 
 if ($auth->user() !== null) {
-    Http::redirect('account.php');
+    Http::redirect('studio.php');
 }
 
 $error = null;
@@ -19,7 +19,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
     } else {
         try {
             $auth->login($email, (string) ($_POST['password'] ?? ''));
-            Http::redirect('account.php');
+            Http::redirect('studio.php');
         } catch (ValidationException $e) {
             $error = $e->getMessage();
         }

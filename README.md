@@ -211,10 +211,43 @@ production:
 - Every page sends CSP, X-Frame-Options, X-Content-Type-Options and
   Referrer-Policy, and `noindex`.
 
+### Content studio
+
+`app/studio.php` is the admin-only publishing interface. Sign in and it
+lists everything grouped by where it appears, with a form to publish or edit.
+
+An entry has a title, short introduction, category, publication date,
+draft/published status, a cover picture with a description, an optional
+audio or video recording, label/value detail facts, and a body in simple
+HTML. Entries whose type is placed on the home page also carry the card
+fields: heading, colour, small and corner labels, order and a link.
+
+**Content types are managed, not hardcoded** (`app/types.php`). Each type
+has a *placement* that decides where its entries render:
+
+| Placement | Where it appears |
+|---|---|
+| Project card | The home page grid, with a detail panel |
+| Writing | `writing.php`, each entry at `entry.php?slug=...` |
+
+So a new type such as "Case study" or "Transliteration" can be added at any
+time. A type cannot be deleted while it still has entries. The `Writing`
+link only appears in the site header once something is published there.
+
+The card heading accepts a vertical bar to force a line break
+(`Resort|Booking`), which is how the cards keep their two-line rhythm
+without putting markup in the title.
+
+Uploads land in `output/uploads/` under a random name with an extension
+chosen from the file's actual contents, never from the name it arrived
+with. `output/uploads/.htaccess` disables script execution there. Bodies
+are stored as written and reduced to a tag allowlist when rendered.
+
 ### Tests
 
 ```powershell
 php tools/test_auth.php
+php tools/test_content.php
 ```
 
 Covers registration, sign-in, sessions, throttling, password change, CSRF

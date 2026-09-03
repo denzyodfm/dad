@@ -79,7 +79,7 @@ $writing = $content->writingEntries();
     <header class="site-header">
       <a class="brand" href="#main"><span class="brand-mark">DD</span><span>Dennis Dizon</span></a>
       <p class="role">FileMaker Developer / IT Specialist</p>
-      <div class="header-actions"><span class="available"><i></i>Available</span><a href="output/pdf/Dennis-Dizon-Resume-Professional.pdf" download="Dennis-Dizon-Resume-Professional.pdf" type="application/pdf">Résumé ↓</a></div>
+      <div class="header-actions"><span class="available"><i></i>Available</span><?php if ($writing !== []): ?><a href="writing.php">Writing &#8599;</a><?php endif; ?><a href="output/pdf/Dennis-Dizon-Resume-Professional.pdf" download="Dennis-Dizon-Resume-Professional.pdf" type="application/pdf">Résumé ↓</a></div>
     </header>
 
     <main id="main">

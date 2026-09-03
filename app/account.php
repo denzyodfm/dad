@@ -58,6 +58,8 @@ require __DIR__ . '/partials/head.php';
             : 'This is your first visit') ?></strong></div>
       </div>
 
+      <p class="auth-alt"><a href="studio.php">Open the content studio</a></p>
+
       <section class="panel">
         <h2>Change password</h2>
         <form method="post" action="account.php" novalidate>

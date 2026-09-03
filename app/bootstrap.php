@@ -97,6 +97,11 @@ function safe_html(?string $html): string
     if (trim($html) === '') {
         return '';
     }
+    // Drop script and style blocks with their contents. strip_tags alone would
+    // remove the tags but leave the code sitting in the page as visible text.
+    $html = preg_replace('#<(script|style)\b[^>]*>.*?</\1\s*>#is', '', $html) ?? $html;
+    $html = preg_replace('#</?(script|style)\b[^>]*>#i', '', $html) ?? $html;
+
     $allowed = '<p><br><b><strong><i><em><ul><ol><li><blockquote><h3><h4><code><pre><a>';
     $html = strip_tags($html, $allowed);
     $html = preg_replace('/\son[a-z]+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html) ?? $html;

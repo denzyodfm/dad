@@ -1,0 +1,8 @@
+# Uploads are data, never code. Serve them inert even if something with an
+# executable extension ever lands here.
+php_flag engine off
+<FilesMatch "\.(php|phtml|phar|cgi|pl|py|sh)$">
+  Require all denied
+</FilesMatch>
+Options -Indexes -ExecCGI
+AddType text/plain .php .phtml .phar

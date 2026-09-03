@@ -1,0 +1,77 @@
+/* Content studio. Extends the site palette in ../styles.css and the form
+   styling in auth.css. In a file, not a <style> block, because the studio
+   sends a Content-Security-Policy of style-src 'self'. */
+
+body.studio{background:var(--paper)}
+
+.studio-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.8rem clamp(1rem,3vw,2.4rem);border-bottom:1px solid var(--line);background:var(--paper)}
+.studio-bar .brand{align-items:center}
+.studio-bar .brand span{display:flex;flex-direction:column;gap:.15rem;text-transform:none;
+  font-size:.9rem;font-weight:600;letter-spacing:-.01em}
+.studio-bar .brand small{color:var(--muted);font:500 .5rem var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.studio-nav{display:flex;align-items:center;gap:1.2rem;
+  font:500 .55rem var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.studio-nav a{border-bottom:1px solid}
+
+.studio-shell{width:min(940px,100%);margin:auto;padding:clamp(1.4rem,4vh,2.6rem) clamp(1rem,3vw,2.4rem) 4rem}
+
+.studio-intro{display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.2rem;
+  padding-bottom:1.2rem;margin-bottom:1.6rem;border-bottom:1px solid var(--line)}
+.studio-intro .eyebrow{flex-basis:100%}
+.studio-intro h1{margin:0;flex:1;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1;
+  font-weight:500;letter-spacing:-.05em}
+.studio-new{padding:.6rem 1rem;background:var(--ink);color:var(--paper);
+  font:500 .55rem var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.studio-new:hover{background:var(--blue)}
+.studio-back{color:var(--muted);font:500 .55rem var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.studio-back:hover{color:var(--blue)}
+
+.studio-empty{margin:0 0 2rem;color:var(--muted);font-size:.85rem}
+.studio-group{margin-bottom:2.2rem}
+.studio-list{list-style:none;margin:.5rem 0 0;padding:0;border-top:1px solid var(--line)}
+.studio-list li{border-bottom:1px solid var(--line)}
+.studio-list a{display:grid;grid-template-columns:8rem 1fr auto;align-items:baseline;gap:1rem;padding:.8rem .2rem}
+.studio-list a:hover{background:rgb(64 88 234/.05)}
+.studio-list strong{font-size:.92rem;font-weight:600;letter-spacing:-.01em}
+.studio-type{color:var(--muted);font:500 .5rem var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.studio-meta{color:var(--muted);font:500 .5rem var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.studio-draft{margin-left:.5rem;padding:.1rem .4rem;background:var(--ink);color:var(--paper);font-style:normal}
+
+.studio-form{margin:0 0 2rem}
+.studio-form h2{margin:0 0 1rem;font-size:1.05rem;font-weight:600;letter-spacing:-.02em}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 1.4rem}
+.field.narrow{max-width:9rem}
+.field select,.field textarea{padding:.7rem .8rem;border:1px solid var(--line);border-radius:0;
+  background:#fff;color:var(--ink);font:400 .9rem var(--display)}
+.field select:focus-visible,.field textarea:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.field textarea{resize:vertical}
+.field textarea.code{font:400 .8rem/1.6 var(--mono);color:#3d4ba8}
+.field input[type=file]{padding:.55rem;border:1px solid var(--line);background:#fff;font-size:.78rem}
+.checkline{display:flex;align-items:center;gap:.5rem;margin-top:.5rem;
+  color:var(--muted);font-size:.75rem;text-transform:none;letter-spacing:0}
+
+.panel-block{margin:0 0 1.6rem;padding:1.1rem;border:1px solid var(--line);background:rgb(23 23 20/.02)}
+.panel-block legend{padding:0 .4rem;color:var(--muted);
+  font:500 .5rem var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.panel-block.is-muted{opacity:.55}
+
+.media-block{display:grid;grid-template-columns:150px 1fr;gap:1.2rem;align-items:start}
+.media-preview{display:grid;place-items:center;aspect-ratio:1/.78;background:#e4dfd4;overflow:hidden}
+.media-preview img{width:100%;height:100%;object-fit:cover}
+.media-preview span{color:var(--muted);font:500 .5rem var(--mono);text-transform:uppercase;letter-spacing:.05em}
+
+.studio-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:.4rem}
+.danger{padding:.8rem 1.2rem;border:1px solid #b3341c;background:none;color:#8d2916;cursor:pointer;
+  font:500 .55rem var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.danger:hover{background:#b3341c;color:#fff}
+
+.type-row{padding-bottom:1.2rem;border-bottom:1px solid var(--line)}
+.type-row .row{grid-template-columns:1fr 1fr auto}
+
+@media(max-width:720px){
+  .row,.type-row .row{grid-template-columns:1fr}
+  .media-block{grid-template-columns:1fr}
+  .studio-list a{grid-template-columns:1fr;gap:.25rem}
+  .studio-bar{flex-direction:column;align-items:flex-start;gap:.7rem}
+}
