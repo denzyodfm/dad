@@ -48,7 +48,10 @@ dimmed with opacity.
 ## Résumé PDF
 
 `output/pdf/Dennis-Dizon-Resume-Professional.pdf` is generated, not
-hand-edited. Rebuild it after changing any résumé content:
+hand-edited. It leads with web application development and the AI-assisted
+delivery workflow, and groups Selected Projects into Web Applications and
+Business Systems. The site profile in `index.php` says the same thing, so
+change both together. Rebuild after any résumé edit:
 
 ```powershell
 pip install reportlab

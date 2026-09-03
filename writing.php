@@ -32,7 +32,7 @@ $entries = $content->writingEntries();
   <div class="shell">
     <header class="site-header">
       <a class="brand" href="./"><span class="brand-mark">DD</span><span>Dennis Dizon</span></a>
-      <p class="role">FileMaker Developer / IT Specialist</p>
+      <p class="role">Web &amp; FileMaker Developer / IT Specialist</p>
       <div class="header-actions"><a href="./">Back to work &#8599;</a></div>
     </header>
 

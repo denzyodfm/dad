@@ -72,7 +72,7 @@ if ($entry === null) {
   <div class="shell">
     <header class="site-header">
       <a class="brand" href="./"><span class="brand-mark">DD</span><span>Dennis Dizon</span></a>
-      <p class="role">FileMaker Developer / IT Specialist</p>
+      <p class="role">Web &amp; FileMaker Developer / IT Specialist</p>
       <div class="header-actions"><a href="writing.php">All writing &#8599;</a></div>
     </header>
 
