@@ -76,7 +76,7 @@ echo "\n";
 echo "  Portfolio   http://127.0.0.1:{$port}/\n";
 echo "  Account     http://127.0.0.1:{$port}/app/\n";
 echo '  Accounts    ' . ($userCount === 0
-    ? "none yet - open /app/register.php to create one\n"
+    ? "none yet - run: php tools/create_admin.php you@example.com \"Your Name\"\n"
     : "{$userCount} registered\n");
 echo "\n  Ctrl+C to stop.\n\n";
 
