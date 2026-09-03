@@ -15,6 +15,13 @@ $entries = $content->writingEntries();
   <meta name="description" content="Writing by Dennis Dizon on building business systems, FileMaker delivery and IT infrastructure." />
   <meta name="theme-color" content="#f2f0e9" />
   <title>Writing — Dennis Dizon</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Writing — Dennis Dizon" />
+  <meta property="og:description" content="Writing by Dennis Dizon on building business systems, FileMaker delivery and IT infrastructure." />
+  <meta property="og:image" content="output/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Writing — Dennis Dizon" />
+  <meta name="twitter:image" content="output/og-image.png" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preload" href="fonts/manrope-400-700-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="fonts/fonts.css" />

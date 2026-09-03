@@ -243,6 +243,22 @@ chosen from the file's actual contents, never from the name it arrived
 with. `output/uploads/.htaccess` disables script execution there. Bodies
 are stored as written and reduced to a tag allowlist when rendered.
 
+### Drafts and sharing
+
+An entry saved as a draft is invisible to the public: it is not listed and
+its URL returns 404. A signed-in administrator opening the same URL sees it
+with a "Draft preview" banner and `noindex`, so you can check a piece before
+publishing it. The studio links straight to it after saving.
+
+Each published entry carries its own Open Graph and Twitter tags, using its
+cover picture when it has one and the site card otherwise, so a shared link
+previews properly.
+
+`sitemap.php` lists the home page and every published writing entry. It
+builds absolute URLs from the request host; set `SITE_ORIGIN` in `.env` once
+the site has a real domain so the URLs are right regardless of how the
+request arrives.
+
 ### Tests
 
 ```powershell
@@ -250,8 +266,12 @@ php tools/test_auth.php
 php tools/test_content.php
 ```
 
-Covers registration, sign-in, sessions, throttling, password change, CSRF
-and SQL injection. Runs against in-memory SQLite using the same
+`test_auth.php` covers registration, sign-in, sessions, throttling,
+password change, CSRF and SQL injection. `test_content.php` covers content
+types, entries, facts, placement, the writable-column whitelist, the HTML
+sanitiser, uploads, and checks that `schema.sql` and `schema.sqlite.sql`
+still declare the same tables and columns -- they are maintained by hand, so
+that guard exists to catch a drift before a deploy does. Runs against in-memory SQLite using the same
 `database/schema.sqlite.sql` the dev server uses, so the tests and the
 running app cannot drift apart. The app's SQL is plain portable statements
 with PHP-side timestamps, so MySQL behaves the same.

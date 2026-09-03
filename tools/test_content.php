@@ -225,6 +225,64 @@ check('will not delete a name it did not generate', is_file($outside));
 array_map('unlink', glob($dir . '/*') ?: []);
 rmdir($dir);
 
+echo "\nThe two schema files agree\n";
+/**
+ * The MySQL schema is what production runs; the SQLite one backs development
+ * and these tests. They are maintained by hand, so compare them here rather
+ * than discovering a drift on a deploy.
+ *
+ * @return array<string,list<string>> table => column names
+ */
+function tablesOf(string $sql): array
+{
+    $tables = [];
+    preg_match_all(
+        '/CREATE TABLE (?:IF NOT EXISTS )?`?(\w+)`?\s*\((.*?)\n\)/is',
+        $sql,
+        $matches,
+        PREG_SET_ORDER
+    );
+    foreach ($matches as $match) {
+        $columns = [];
+        foreach (explode("\n", $match[2]) as $line) {
+            $line = trim($line);
+            // Skip blanks, comments and table-level clauses.
+            if ($line === '' || str_starts_with($line, '--')) {
+                continue;
+            }
+            if (preg_match('/^(PRIMARY|UNIQUE|KEY|CONSTRAINT|FOREIGN|INDEX)\b/i', $line) === 1) {
+                continue;
+            }
+            if (preg_match('/^`?(\w+)`?\s+\S/', $line, $column) === 1) {
+                $columns[] = strtolower($column[1]);
+            }
+        }
+        sort($columns);
+        $tables[strtolower($match[1])] = $columns;
+    }
+    return $tables;
+}
+
+$mysql = tablesOf(file_get_contents(__DIR__ . '/../database/schema.sql'));
+$sqlite = tablesOf(file_get_contents(__DIR__ . '/../database/schema.sqlite.sql'));
+
+check('both files were parsed', $mysql !== [] && $sqlite !== [],
+    count($mysql) . ' vs ' . count($sqlite) . ' tables');
+$missingTables = array_diff(array_keys($mysql), array_keys($sqlite));
+$extraTables = array_diff(array_keys($sqlite), array_keys($mysql));
+check('the same tables exist in both', $missingTables === [] && $extraTables === [],
+    'only in MySQL: ' . implode(', ', $missingTables) . '; only in SQLite: ' . implode(', ', $extraTables));
+
+foreach ($mysql as $table => $columns) {
+    if (!isset($sqlite[$table])) {
+        continue;
+    }
+    $onlyMysql = array_diff($columns, $sqlite[$table]);
+    $onlySqlite = array_diff($sqlite[$table], $columns);
+    check("{$table} has the same columns", $onlyMysql === [] && $onlySqlite === [],
+        'only in MySQL: ' . implode(', ', $onlyMysql) . '; only in SQLite: ' . implode(', ', $onlySqlite));
+}
+
 echo "\n" . str_repeat('-', 52) . "\n";
 echo ($failed === 0 ? 'ALL PASS' : 'FAILURES') . ": {$passed} passed, {$failed} failed\n";
 exit($failed === 0 ? 0 : 1);

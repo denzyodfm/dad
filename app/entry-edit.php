@@ -112,10 +112,14 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 $entryId = (int) $entry['id'];
                 $content->updateEntry($entryId, $data);
                 // Replaced or removed files are deleted only once the row is saved.
-                if ($newCover !== null || ($data['cover_path'] ?? false) === null) {
+                // Test with array_key_exists, not ??, which reads a deliberate
+                // null as absent and would leave the old file orphaned on disk.
+                $coverCleared = array_key_exists('cover_path', $data) && $data['cover_path'] === null;
+                $mediaCleared = array_key_exists('media_path', $data) && $data['media_path'] === null;
+                if ($newCover !== null || $coverCleared) {
                     $uploads->delete($entry['cover_path']);
                 }
-                if ($newMedia !== null || ($data['media_path'] ?? false) === null) {
+                if ($newMedia !== null || $mediaCleared) {
                     $uploads->delete($entry['media_path']);
                 }
             }
@@ -149,8 +153,10 @@ require __DIR__ . '/partials/studio-head.php';
       </div>
 
 <?php if (isset($_GET['saved'])): ?>
-      <p class="notice ok">Saved.<?php if (!$isNew && $entry['status'] === 'published'): ?>
-        <a href="../<?= $entry['placement'] === 'writing' ? 'entry.php?slug=' . urlencode((string) $entry['slug']) : '' ?>">View it on the site</a>.<?php endif; ?></p>
+      <p class="notice ok">Saved.<?php if (!$isNew): ?>
+        <a href="../<?= $entry['placement'] === 'writing'
+            ? 'entry.php?slug=' . urlencode((string) $entry['slug'])
+            : '' ?>"><?= $entry['status'] === 'published' ? 'View it on the site' : 'Preview the draft' ?></a>.<?php endif; ?></p>
 <?php endif; ?>
 <?php if ($error !== null): ?>
       <p class="notice error"><?= e($error) ?></p>
