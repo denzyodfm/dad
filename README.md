@@ -120,6 +120,18 @@ Requirements: PHP 8.1+ with `pdo_mysql`, and MySQL 8 or MariaDB 10.4+.
 Point the web root at the repository root and make sure `.env` sits above
 it -- see Backend below.
 
+For the dedicated Ubuntu VPS at `172.16.0.209`, the repository includes an
+idempotent provisioning script. After cloning to `/home/dad/dad`, run:
+
+```bash
+cd /home/dad/dad
+sudo bash tools/provision-ubuntu.sh
+```
+
+It deploys to `/var/www/dad`, creates a least-privilege MySQL user, writes the
+protected production environment, configures Nginx for
+`dennisadizon.online`, seeds the systems, and creates the administrator.
+
 Because the home page reads the database, a database outage takes the
 portfolio down with it, which was not true of the old static page. If that
 matters, put a cache in front of it.
