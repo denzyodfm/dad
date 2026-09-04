@@ -12,4 +12,4 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST' || !Csrf::isValid()) {
 }
 
 $auth->logout();
-Http::redirect('login.php');
+Http::redirect(($_POST['return_to'] ?? '') === 'portfolio' ? '../' : 'login.php');

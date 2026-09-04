@@ -1,0 +1,35 @@
+.header-actions .access-link {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font: 500 .45rem var(--mono);
+  line-height: 1;
+  cursor: pointer;
+  opacity: .42;
+  transition: opacity .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.header-actions .access-link:hover,
+.header-actions .access-link:focus-visible {
+  opacity: 1;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.access-form {
+  display: inline;
+  margin: 0;
+}
+
+@media print {
+  .access-link,
+  .access-form {
+    display: none !important;
+  }
+}

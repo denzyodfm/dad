@@ -15,6 +15,7 @@ $cards = $content->portfolioCards();
 $writing = $content->writingEntries();
 $site = (new SiteSettings($pdo))->values();
 $sv = static fn(string $key, string $fallback = ''): string => $site[$key] ?? $fallback;
+$currentUser = $auth->user();
 ?>
 <!doctype html>
 <html lang="en">
@@ -48,6 +49,7 @@ $sv = static fn(string $key, string $fallback = ''): string => $site[$key] ?? $f
   <link rel="stylesheet" href="fonts/fonts.css" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="carousel.css" />
+  <link rel="stylesheet" href="access-control.css" />
   <script src="script.js" defer></script>
   <script type="application/ld+json">
   {
@@ -84,7 +86,7 @@ $sv = static fn(string $key, string $fallback = ''): string => $site[$key] ?? $f
     <header class="site-header">
       <a class="brand" href="#main"><span class="brand-mark">DD</span><span><?= e($sv('name', 'Dennis Dizon')) ?></span></a>
       <p class="role"><?= e($sv('role', 'Web & FileMaker Developer / IT Specialist')) ?></p>
-      <div class="header-actions"><span class="available"><i></i>Available</span><?php if ($writing !== []): ?><a href="writing.php">Writing &#8599;</a><?php endif; ?><a href="output/pdf/Dennis-Dizon-Resume-Professional.pdf" download="Dennis-Dizon-Resume-Professional.pdf" type="application/pdf">Résumé ↓</a></div>
+      <div class="header-actions"><span class="available"><i></i>Available</span><?php if ($writing !== []): ?><a href="writing.php">Writing &#8599;</a><?php endif; ?><a href="output/pdf/Dennis-Dizon-Resume-Professional.pdf" download="Dennis-Dizon-Resume-Professional.pdf" type="application/pdf">Résumé ↓</a><?php if ($currentUser !== null): ?><a class="access-link" href="app/studio.php" aria-label="Open content studio" title="Content studio">S</a><form class="access-form" method="post" action="app/logout.php"><?= Csrf::field() ?><input type="hidden" name="return_to" value="portfolio" /><button class="access-link" type="submit" aria-label="Sign out" title="Sign out">&times;</button></form><?php else: ?><a class="access-link" href="app/login.php" aria-label="Open content studio" title="Content studio">S</a><?php endif; ?></div>
     </header>
 
     <main id="main">
