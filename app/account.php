@@ -18,10 +18,15 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         $error = 'That form expired. Please try again.';
     } else {
         try {
+            $newPassword = (string) ($_POST['new_password'] ?? '');
+            $confirmedPassword = (string) ($_POST['confirm_password'] ?? '');
+            if ($newPassword === '' || !hash_equals($newPassword, $confirmedPassword)) {
+                throw new ValidationException('The new passwords do not match.');
+            }
             $auth->changePassword(
                 (int) $currentUser['id'],
                 (string) ($_POST['current_password'] ?? ''),
-                (string) ($_POST['new_password'] ?? '')
+                $newPassword
             );
             // Every session was revoked, including this one, so sign back in.
             $success = 'Your password was changed. Please sign in again.';
@@ -72,9 +77,16 @@ require __DIR__ . '/partials/head.php';
           <div class="field">
             <label for="new_password">New password</label>
             <input type="password" id="new_password" name="new_password"
-                   autocomplete="new-password" required />
-            <p class="hint">At least <?= Auth::MIN_PASSWORD_LENGTH ?> characters. Changing it signs
-              you out everywhere, including here.</p>
+                   autocomplete="new-password" minlength="<?= Auth::MIN_PASSWORD_LENGTH ?>"
+                   aria-describedby="password-hint" required />
+          </div>
+          <div class="field">
+            <label for="confirm_password">Confirm new password</label>
+            <input type="password" id="confirm_password" name="confirm_password"
+                   autocomplete="new-password" minlength="<?= Auth::MIN_PASSWORD_LENGTH ?>"
+                   aria-describedby="password-hint" required />
+            <p class="hint" id="password-hint">Use at least <?= Auth::MIN_PASSWORD_LENGTH ?> characters.
+              Changing it signs you out everywhere, including here.</p>
           </div>
           <button class="submit" type="submit">Change password &#8599;</button>
         </form>

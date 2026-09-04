@@ -54,6 +54,10 @@
     {
       "choice": "Discreet authenticated studio control in the public header",
       "reason": "Keeps portfolio administration accessible to the owner without presenting an obvious public-facing admin call to action"
+    },
+    {
+      "choice": "Explicit password confirmation in account security forms",
+      "reason": "Prevents accidental password changes caused by typing errors while preserving the established compact form pattern"
     }
   ],
   "evidence": [],
