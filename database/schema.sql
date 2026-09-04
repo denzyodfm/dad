@@ -93,3 +93,26 @@ CREATE TABLE IF NOT EXISTS entry_facts (
   CONSTRAINT entry_facts_entry_foreign FOREIGN KEY (entry_id) REFERENCES entries(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS site_settings (
+  setting_key VARCHAR(120) NOT NULL,
+  setting_value TEXT NOT NULL,
+  label VARCHAR(160) NOT NULL,
+  input_type ENUM('text','textarea','email','tel','url') NOT NULL DEFAULT 'text',
+  sort_order INT NOT NULL DEFAULT 0,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (setting_key)
+) ENGINE=InnoDB;
+
+INSERT INTO site_settings (setting_key, setting_value, label, input_type, sort_order) VALUES
+('name','Dennis Dizon','Name','text',1),('role','Web & FileMaker Developer / IT Specialist','Role','text',2),
+('location','Butuan City, Philippines','Location','text',3),('experience','7+ years building custom applications','Experience','text',4),
+('headline','Business systems, without the friction.','Headline','text',5),
+('intro','I build secure web applications and FileMaker business systems, using AI-assisted development to ship quickly without cutting corners on security, and I keep the infrastructure behind them fast and reliable.','Introduction','textarea',6),
+('email','denzyodfm@gmail.com','Email','email',7),('phone','+63 909 599 4462','Phone','tel',8),
+('metric_1_value','40%','Metric 1 value','text',9),('metric_1_label','less manual entry','Metric 1 label','text',10),
+('metric_2_value','30%','Metric 2 value','text',11),('metric_2_label','faster processing','Metric 2 label','text',12),
+('metric_3_value','99%','Metric 3 value','text',13),('metric_3_label','uptime','Metric 3 label','text',14),
+('metric_4_value','10+','Metric 4 value','text',15),('metric_4_label','years in IT','Metric 4 label','text',16),
+('core_stack','Next.js · React · TypeScript · PHP · MySQL · AI-assisted delivery · FileMaker · REST/JSON · Windows/Linux','Core stack','textarea',17)
+ON DUPLICATE KEY UPDATE label=VALUES(label), input_type=VALUES(input_type), sort_order=VALUES(sort_order);
+

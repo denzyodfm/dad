@@ -3,6 +3,8 @@
    sends a Content-Security-Policy of style-src 'self'. */
 
 body.studio{background:var(--paper)}
+.settings-form{max-width:46rem}.settings-form textarea{width:100%;resize:vertical;min-height:6rem}
+.settings-systems{margin-top:3rem}.settings-systems .studio-intro h2{margin:0;flex:1;font-size:1.35rem}.table-scroll{overflow-x:auto;border-top:1px solid var(--line)}.management-table{width:100%;border-collapse:collapse;min-width:680px}.management-table th,.management-table td{padding:.75rem .55rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}.management-table th{color:var(--muted);font:500 .48rem var(--mono);text-transform:uppercase;letter-spacing:.06em}.management-table td{font-size:.72rem}.management-table td:first-child{font-family:var(--mono);color:var(--muted)}.management-table td:nth-child(2){display:flex;flex-direction:column;gap:.18rem}.management-table small{color:var(--muted);font:500 .46rem var(--mono);text-transform:uppercase}.management-table td:last-child{text-align:right}.management-table td:last-child a{color:var(--blue);font:500 .5rem var(--mono);text-transform:uppercase;border-bottom:1px solid}
 
 .studio-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;
   padding:.8rem clamp(1rem,3vw,2.4rem);border-bottom:1px solid var(--line);background:var(--paper)}

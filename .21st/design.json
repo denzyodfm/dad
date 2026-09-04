@@ -32,6 +32,10 @@
   },
   "decisions": [
     {
+      "choice": "Database-backed systems carousel with authenticated content settings",
+      "reason": "Keeps every system discoverable in a compact overview while allowing administrators to manage all portfolio and global fields without editing source code"
+    },
+    {
       "choice": "Three-color portfolio palette: warm paper, near-black, and cobalt",
       "reason": "Creates visual cohesion and lets hierarchy come from typography and contrast rather than decorative color"
     },

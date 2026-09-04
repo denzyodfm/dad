@@ -283,6 +283,16 @@ foreach ($mysql as $table => $columns) {
         'only in MySQL: ' . implode(', ', $onlyMysql) . '; only in SQLite: ' . implode(', ', $onlySqlite));
 }
 
+echo "\nSite settings\n";
+[$content, $pdo] = freshContent();
+$settings = new SiteSettings($pdo);
+$beforeSettings = $settings->values();
+check('seeded settings are available', ($beforeSettings['email'] ?? '') === 'denzyodfm@gmail.com');
+$settings->update(['headline' => 'A changed headline', 'not_a_real_key' => 'ignored']);
+$afterSettings = $settings->values();
+check('updates an allowed setting', $afterSettings['headline'] === 'A changed headline');
+check('ignores unknown setting keys', !array_key_exists('not_a_real_key', $afterSettings));
+
 echo "\n" . str_repeat('-', 52) . "\n";
 echo ($failed === 0 ? 'ALL PASS' : 'FAILURES') . ": {$passed} passed, {$failed} failed\n";
 exit($failed === 0 ? 0 : 1);

@@ -34,6 +34,7 @@ if (!isset($pageTitle)) {
       <span>Content Studio<small><?= e($currentUser['display_name'] ?? '') ?></small></span></a>
     <nav class="studio-nav">
       <a href="../">View site</a>
+      <a href="settings.php">Settings</a>
       <a href="account.php">Account</a>
       <form class="signout" method="post" action="logout.php">
         <?= Csrf::field() ?>

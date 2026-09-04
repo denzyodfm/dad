@@ -219,6 +219,17 @@ production:
 `app/studio.php` is the admin-only publishing interface. Sign in and it
 lists everything grouped by where it appears, with a form to publish or edit.
 
+`app/settings.php` is the admin Settings area. It manages the public profile,
+contact details, career metrics and technology summary from `site_settings`.
+The same page includes a systems management table; each row opens the complete
+entry editor, where every card, detail, link, media, ordering and publication
+field can be changed.
+
+Published project entries appear in the keyboard-accessible carousel on the
+home page. Arrow buttons move one card at a time, native horizontal scrolling
+remains available for touch and trackpads, and reduced-motion preferences are
+respected.
+
 An entry has a title, short introduction, category, publication date,
 draft/published status, a cover picture with a description, an optional
 audio or video recording, label/value detail facts, and a body in simple
