@@ -24,7 +24,7 @@ sudo rsync -a --delete \
   --exclude='tmp/pdfs/professional/' --exclude='tmp/pdfs/resume/' \
   "$SOURCE_DIR/" "$WEB_ROOT/"
 sudo mkdir -p "$WEB_ROOT/output/uploads"
-sudo chown -R root:www-data "$WEB_ROOT"
+sudo chown -R dad:www-data "$WEB_ROOT"
 sudo find "$WEB_ROOT" -type d -exec chmod 0755 {} \;
 sudo find "$WEB_ROOT" -type f -exec chmod 0644 {} \;
 sudo chown www-data:www-data "$WEB_ROOT/output/uploads"
